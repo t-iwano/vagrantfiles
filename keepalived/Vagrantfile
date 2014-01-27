@@ -10,19 +10,22 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define :keepalived01 do |keepalived|
     keepalived.vm.hostname = "keepalived01"
     keepalived.vm.network :private_network, ip: "192.168.50.10"
+    keepalived.vm.network :private_network, ip: "192.168.51.10"
     keepalived.vm.provision "shell", path: "bootstrap.d/keepalived01.sh"
   end
 
   config.vm.define :keepalived02 do |keepalived|
     keepalived.vm.hostname = "keepalived02"
     keepalived.vm.network :private_network, ip: "192.168.50.11"
-    #keepalived.vm.provision "shell", path: "bootstrap.d/keepalived02.sh"
+    keepalived.vm.network :private_network, ip: "192.168.51.11"
+    keepalived.vm.provision "shell", path: "bootstrap.d/keepalived02.sh"
   end
 
   config.vm.define :mysql56 do |mysql|
     mysql.vm.hostname = "mysql56"
     mysql.vm.network :private_network, ip: "192.168.50.12"
-    #mysql.vm.provision "shell", path: "bootstrap.d/mysql56.sh"
+    mysql.vm.network :private_network, ip: "192.168.51.12"
+    mysql.vm.provision "shell", path: "bootstrap.d/mysql56.sh"
   end
 
   config.vm.provider "virtualbox" do |v|
