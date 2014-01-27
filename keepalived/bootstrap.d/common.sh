@@ -3,6 +3,15 @@
 #
 set -e
 
+function delete_mysqldir() {
+  local mysqldir=/var/lib/mysql
+  if [[ -d ${mysqldir} ]]; then
+    rm -rf ${mysqldir}
+    mkdir ${mysqldir}
+    chown -R mysql:mysql ${mysqldir}
+  fi
+}
+
 function check_mycnf() {
   if [[ -f /etc/mycnf ]]; then
     mv /etc/my.cnf /etc/my.cnf.`date +%Y%m%d`
@@ -86,6 +95,10 @@ function setup_timezone() {
 
 function dump_sql() {
   mysqldump -uroot --all-databases --single-transaction --triggers --routines --events > /vagrant/fulldump.sql
+}
+
+function import_sql() {
+  mysql -uroot < /vagrant/fulldump.sql
 }
 
 ### service

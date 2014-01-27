@@ -6,6 +6,9 @@
 set -e
 set -x
 
+### require
+. /vagrant/bootstrap.d/common.sh
+
 ### function
 function yum() {
   $(type -P yum) "${@}"
@@ -34,3 +37,24 @@ addpkgs="
 if [[ -n "${addpkgs}" ]]; then
   yum install -y ${addpkgs}
 fi
+
+### delete mysqldir
+delete_mysqldir
+
+### create my.cnf
+check_mycnf
+build_mycnf
+
+### start mysqld
+start_service mysqld
+
+### importdb
+import_sql
+
+### setup zabbix server conf
+setup_zabbix_serverconf
+
+### setup timezone
+setup_timezone
+
+

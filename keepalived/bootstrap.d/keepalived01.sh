@@ -41,6 +41,9 @@ if [[ -n "${addpkgs}" ]]; then
   yum install -y ${addpkgs}
 fi
 
+### delete mysqldir
+delete_mysqldir
+
 ### create my.cnf
 check_mycnf
 build_mycnf
