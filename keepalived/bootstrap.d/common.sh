@@ -23,15 +23,15 @@ function build_mycnf() {
   case "${hostname}" in
   keepalived01)
     server_id=100
-    report_host=192.168.50.10
+    report_host=192.168.51.10
     ;;
   keepalived02)
     server_id=101
-    report_host=192.168.50.11
+    report_host=192.168.51.11
     ;;
   mysql56)
     server_id=102
-    report_host=192.168.50.12
+    report_host=192.168.51.12
     ;;
   esac
   cat <<EOS > "/etc/my.cnf"
@@ -63,9 +63,9 @@ EOS
 
 function create_user() {
   mysql -uroot <<EOS
-grant replication slave on *.* to repl@'192.168.50.10' identified by 'repl';
-grant replication slave on *.* to repl@'192.168.50.11' identified by 'repl';
-grant replication slave on *.* to repl@'192.168.50.12' identified by 'repl';
+grant replication slave on *.* to repl@'192.168.51.10' identified by 'repl';
+grant replication slave on *.* to repl@'192.168.51.11' identified by 'repl';
+grant replication slave on *.* to repl@'192.168.51.12' identified by 'repl';
 grant all on *.* to root@'%' with grant option;
 grant all privileges on zabbix.* to zabbix@localhost identified by 'zabbix';
 flush privileges;
@@ -99,6 +99,13 @@ function dump_sql() {
 
 function import_sql() {
   mysql -uroot < /vagrant/fulldump.sql
+}
+
+function install_plugins() {
+  mysql -uroot <<EOS
+install plugin rpl_semi_sync_master soname 'semisync_master.so';
+install plugin rpl_semi_sync_slave soname 'semisync_slave.so';
+EOS
 }
 
 ### service

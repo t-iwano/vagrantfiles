@@ -57,4 +57,5 @@ setup_zabbix_serverconf
 ### setup timezone
 setup_timezone
 
-
+### restart mysqld
+restart_service mysqld

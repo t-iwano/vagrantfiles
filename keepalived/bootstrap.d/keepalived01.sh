@@ -57,6 +57,9 @@ create_db
 ### create replication user and zabbix user
 create_user
 
+### install plugins
+install_plugins
+
 ### import zabbix data
 import_zabbix_data
 

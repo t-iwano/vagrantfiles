@@ -48,4 +48,5 @@ start_service mysqld
 ### importdb
 import_sql
 
-
+### restart mysqld
+restart_service mysqld
