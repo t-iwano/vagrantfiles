@@ -54,7 +54,7 @@ function setup_replication() {
   # reset slave
   #reset_slave
   echo "stop slave" |query_mysql
-  echo "reset slave" |query_mysql
+  echo "reset slave all" |query_mysql
 
   # check semi sync slave status
   check_semi_repl_status slave OFF || {
@@ -70,7 +70,7 @@ function setup_replication() {
   }
 }
 
-### setup_params
+### setup params
 hostname=`hostname -s`
 case "${hostname}" in
 keepalived01)
