@@ -18,6 +18,12 @@ function check_mycnf() {
   fi
 }
 
+function check_keepalivedconf() {
+  if [[ -f /etc/keepalived/keepalived.conf ]]; then
+    mv /etc/keepalived/keepalived.conf /etc/keepalived/keepalived.conf.`date +%Y%m%d`
+  fi
+}
+
 function build_mycnf() {
   local hostname=`hostname -s`
   case "${hostname}" in
@@ -84,6 +90,10 @@ function setup_zabbix_serverconf() {
   if ! grep -q "DBPassword=zabbix" /etc/zabbix/zabbix_server.conf >/dev/null; then
     echo "DBPassword=zabbix" >> /etc/zabbix/zabbix_server.conf
   fi
+}
+
+function setup_keepalivedconf() {
+  cp /vagrant/keepalived.conf /etc/keepalived/keepalived.conf
 }
 
 function setup_timezone() {
