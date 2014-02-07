@@ -22,6 +22,10 @@ mysql-utilities-1.3.6-1.el6.noarch   http://dev.mysql.com/get/Downloads/MySQLGUI
 EOS
 }
 
+function setup_slave() {
+  /usr/bin/mysqlreplicate --master=root@192.168.51.11 --slave=root@192.168.51.12 --rpl-user=repl:repl --start-from-beginning
+}
+
 ## add 3rd party rpm packages
 list_3rd_party | while read pkg_name pkg_uri; do
   rpm -qi ${pkg_name} >/dev/null || yum install -y ${pkg_uri}
@@ -50,3 +54,6 @@ import_sql
 
 ### restart mysqld
 restart_service mysqld
+
+### setup slave
+setup_slave
