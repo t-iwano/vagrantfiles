@@ -51,6 +51,10 @@ start_service mysqld
 ### importdb
 import_sql
 
+### setup zabbix conf php
+check_zabbixconf
+setup_zabbixconf
+
 ### setup zabbix server conf
 setup_zabbix_serverconf
 
@@ -59,3 +63,8 @@ setup_timezone
 
 ### restart mysqld
 restart_service mysqld
+
+### setup keepalived
+check_keepalivedconf
+setup_keepalivedconf
+

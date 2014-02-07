@@ -24,6 +24,12 @@ function check_keepalivedconf() {
   fi
 }
 
+function check_zabbixconf() {
+  if [[ -f /etc/zabbix/web/zabbix.conf.php ]]; then
+     mv /etc/zabbix/web/zabbix.conf.php /etc/zabbix/web/zabbix.conf.php.`date +%Y%m%d`
+  fi
+}
+
 function build_mycnf() {
   local hostname=`hostname -s`
   case "${hostname}" in
@@ -86,6 +92,10 @@ function import_zabbix_data() {
   mysql -uroot zabbix < /usr/share/doc/zabbix-server-mysql-${zabbix_ver}/create/data.sql
 }
 
+function setup_zabbixconf() {
+  cp /vagrant/config/zabbix.conf.php /etc/zabbix/web/zabbix.conf.php
+}
+
 function setup_zabbix_serverconf() {
   if ! grep -q "DBPassword=zabbix" /etc/zabbix/zabbix_server.conf >/dev/null; then
     echo "DBPassword=zabbix" >> /etc/zabbix/zabbix_server.conf
@@ -93,7 +103,7 @@ function setup_zabbix_serverconf() {
 }
 
 function setup_keepalivedconf() {
-  cp /vagrant/keepalived.conf /etc/keepalived/keepalived.conf
+  cp /vagrant/config/keepalived.conf /etc/keepalived/keepalived.conf
 }
 
 function setup_timezone() {

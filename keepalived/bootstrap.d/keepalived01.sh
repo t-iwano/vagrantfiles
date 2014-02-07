@@ -66,13 +66,16 @@ import_zabbix_data
 ### sql dump initial data
 dump_sql
 
+### setup zabbix conf php
+check_zabbixconf
+setup_zabbixconf
+
 ### setup zabbix server conf
 setup_zabbix_serverconf
 
 ### setup timezone
 setup_timezone
 
-### start service
-start_service httpd
-start_service zabbix-server
-
+### setup keepalived
+check_keepalivedconf
+setup_keepalivedconf
