@@ -60,6 +60,7 @@ enforce-gtid-consistency
 master_info_repository=TABLE
 relay_log_info_repository=TABLE
 report_host=${report_host}
+skip-slave-start
 
 [mysqld_safe]
 log-error=/var/log/mysqld.log
@@ -108,9 +109,9 @@ function setup_keepalivedconf() {
 
 function setup_timezone() {
   comment="# php_value date.timezone Europe\/Riga"
-  egrep -w -q "${comment}$" /etc/httpd/conf.d/zabbix.conf && {
+  if egrep -w -q "${comment}$" /etc/httpd/conf.d/zabbix.conf; then
     sed -i "s/${comment}$/php_value date.timezone Asia\/Tokyo/g" /etc/httpd/conf.d/zabbix.conf
-  }
+  fi
 }
 
 function dump_sql() {
