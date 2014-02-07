@@ -109,7 +109,7 @@ function setup_keepalivedconf() {
 function setup_timezone() {
   comment="# php_value date.timezone Europe\/Riga"
   egrep -w -q "${comment}$" /etc/httpd/conf.d/zabbix.conf && {
-    sed -e "s/${comment}$/php_value date.timezone Asia\/Tokyo/g" /etc/httpd/conf.d/zabbix.conf
+    sed -i "s/${comment}$/php_value date.timezone Asia\/Tokyo/g" /etc/httpd/conf.d/zabbix.conf
   }
 }
 
