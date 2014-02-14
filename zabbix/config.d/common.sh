@@ -52,7 +52,7 @@ function setup_zabbix_serverconf() {
 }
 
 function setup_timezone() {
-  cp /vagrant/config/php.ini /etc/php.ini
+  cp /vagrant/files/php.ini /etc/php.ini
 }
 
 ### yum

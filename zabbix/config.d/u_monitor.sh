@@ -9,7 +9,7 @@ set -x
 ### variables
 
 ### require
-. /vagrant/bootstrap.d/common.sh
+. /vagrant/config.d/common.sh
 
 ### function
 

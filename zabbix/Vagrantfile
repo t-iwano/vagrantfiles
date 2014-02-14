@@ -7,23 +7,23 @@ VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "centos-6.4-x86_64"
 
-  config.vm.define :pmonitor do |z|
-    z.vm.hostname = "pmonitor"
-    z.vm.network :private_network, ip: "192.168.50.15"
-    z.vm.network :forwarded_port, guest: 80, host: 8080
-    #z.vm.provision "shell", path: "bootstrap.d/p_monitor.sh"
+  config.vm.define :pmonitor do |node|
+    node.vm.hostname = "pmonitor"
+    node.vm.network :private_network, ip: "192.168.50.15"
+    node.vm.network :forwarded_port, guest: 80, host: 8080
+    node.vm.provision "shell", path: "config.d/p_monitor.sh"
   end
 
-  config.vm.define :umonitor do |z|
-    z.vm.hostname = "umonitor"
-    z.vm.network :private_network, ip: "192.168.50.16"
-    z.vm.network :forwarded_port, guest: 80, host: 8081
-    z.vm.provision "shell", path: "bootstrap.d/u_monitor.sh"
+  config.vm.define :umonitor do |node|
+    node.vm.hostname = "umonitor"
+    node.vm.network :private_network, ip: "192.168.50.16"
+    node.vm.network :forwarded_port, guest: 80, host: 8081
+    node.vm.provision "shell", path: "config.d/u_monitor.sh"
   end
 
   config.vm.provider "virtualbox" do |v|
     v.memory = 2048
   end
 
-  #config.vm.provision "shell", path: "bootstrap.sh"
+  config.vm.provision "shell", path: "bootstrap.sh"
 end
