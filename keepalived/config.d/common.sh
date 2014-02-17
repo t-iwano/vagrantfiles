@@ -94,7 +94,7 @@ function import_zabbix_data() {
 }
 
 function setup_zabbixconf() {
-  cp /vagrant/config/zabbix.conf.php /etc/zabbix/web/zabbix.conf.php
+  cp /vagrant/files/zabbix.conf.php /etc/zabbix/web/zabbix.conf.php
 }
 
 function setup_zabbix_serverconf() {
@@ -104,7 +104,7 @@ function setup_zabbix_serverconf() {
 }
 
 function setup_keepalivedconf() {
-  cp /vagrant/config/keepalived.conf /etc/keepalived/keepalived.conf
+  cp /vagrant/files/keepalived.conf /etc/keepalived/keepalived.conf
 }
 
 function setup_timezone() {
