@@ -10,34 +10,24 @@ set -x
 . /vagrant/config.d/common.sh
 
 ### function
-function yum() {
-  $(type -P yum) "${@}"
-}
-
-function list_3rd_party() {
-  cat <<EOS | egrep -v ^#
-# pkg_name                           pkg_uri
-mysql-community-release-el6-5.noarch http://repo.mysql.com/mysql-community-release-el6-5.noarch.rpm
-mysql-utilities-1.3.6-1.el6.noarch   http://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-utilities-1.3.6-1.el6.noarch.rpm
-EOS
+function add_packages() {
+  addpkg="
+    mysql-community-server mysql-community-client
+"
+  if [[ -n "${addpkg}" ]]; then
+    yum install -y ${addpkg}
+  fi
 }
 
 function setup_slave() {
   /usr/bin/mysqlreplicate --master=root@192.168.51.11 --slave=root@192.168.51.12 --rpl-user=repl:repl --start-from-beginning
 }
 
-## add 3rd party rpm packages
-list_3rd_party | while read pkg_name pkg_uri; do
-  rpm -qi ${pkg_name} >/dev/null || yum install -y ${pkg_uri}
-done
+### add repository
+add_repositories list_mysqld
 
-# add rpm packages
-addpkgs="
- mysql-community-server mysql-community-client
-"
-if [[ -n "${addpkgs}" ]]; then
-  yum install -y ${addpkgs}
-fi
+### add rpm packages
+add_packages
 
 ### delete mysqldir
 delete_mysqldir
