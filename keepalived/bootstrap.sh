@@ -8,6 +8,7 @@ set -x
 
 ### params
 vagrant_dir=/vagrant
+vagrant_repos_dir=${vagrant_dir}/yum.repos.d
 repos_dir=/etc/yum.repos.d
 base_repofile=CentOS-Base.repo
 vault_repofile=CentOS-Vault-6.4.repo
@@ -20,15 +21,26 @@ function yum() {
 function disabled_baserepo() {
   local baserepo=${repos_dir}/${base_repofile}
   if [[ -f "${baserepo}" ]]; then
-    mv ${baserepo} ${baserepo}.back
+    mv ${baserepo} ${baserepo}.`date +%Y%m%d`
   fi
 }
 
-function add_valtrepo() {
-  local vaultrepo=${vagrant_dir}/${vault_repofile}
-  if [[ -f "${vaultrepo}" ]]; then
-    cp ${vaultrepo} ${repos_dir}/${vault_repofile}
+function change_baserepo() {
+  local baserepo=${repos_dir}/${base_repofile}
+  local vagrant_baserepo=${vagrant_repos_dir}/${base_repofile}
+  if [[ -f "${baserepo}" ]]; then
+    mv ${baserepo} ${baserepo}.`date +%Y%m%d`
   fi
+  mv ${vagrant_baserepo} ${baserepo}
+}
+
+function add_valtrepo() {
+  local vaultrepo=${repos_dir}/${vault_repofile}
+  local vagrant_vaultrepo=${vagrant_repos_dir}/${vault_repofile}
+  if [[ -f "${vaultrepo}" ]]; then
+    cp ${vaultrepo} ${vaultrepo}.`date +%Y%m%d`
+  fi
+  mv ${vagrant_vaultrepo} ${vaultrepo}
 }
 
 function disabled_ipv6() {
@@ -42,8 +54,9 @@ function disabled_ipv6() {
 }
 
 ### base package update
-disabled_baserepo
-add_valtrepo
+
+change_baserepo
+
 yum clean metadata
 yum -y update
 
