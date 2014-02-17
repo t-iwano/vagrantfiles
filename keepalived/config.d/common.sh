@@ -176,8 +176,7 @@ EOS
 function list_zabbix() {
   cat <<EOS | egrep -v ^#
 # pkg_name                           pkg_uri
-zabbix-release-1.8-1.el6.noarch      http://repo.zabbix.com/zabbix/1.8/rhel/6/x86_64/zabbix-rel
-ease-1.8-1.el6.noarch.rpm
+zabbix-release-1.8-1.el6.noarch      http://repo.zabbix.com/zabbix/1.8/rhel/6/x86_64/zabbix-release-1.8-1.el6.noarch.rpm
 EOS
 }
 
@@ -201,7 +200,7 @@ function add_packages() {
   addpkg="
     keepalived
     mysql-community-server mysql-community-client
-    zabbix-server-mysql zabbix-web-mysql zabbix-get zabbix-web-japanese
+    zabbix-server-mysql zabbix-web-mysql zabbix-web-japanese
 "
   if [[ -n "${addpkg}" ]]; then
     yum install -y ${addpkg}
