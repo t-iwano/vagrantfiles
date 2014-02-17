@@ -128,11 +128,18 @@ function setup_zabbix_serverconf() {
 }
 
 function setup_timezone() {
-  comment="# php_value date.timezone Europe\/Riga"
-  if egrep -w -q "${comment}$" /etc/httpd/conf.d/zabbix.conf; then
-    sed -i "s/${comment}$/php_value date.timezone Asia\/Tokyo/g" /etc/httpd/conf.d/zabbix.conf
+  if [[ -f /etc/php.ini ]]; then
+    mv /etc/php.ini /etc/php.ini.`date +%Y%m%d`
   fi
+  cp /vagrant/files/php.ini /etc/php.ini
 }
+
+#function setup_timezone() {
+#  comment="# php_value date.timezone Europe\/Riga"
+#  if egrep -w -q "${comment}$" /etc/httpd/conf.d/zabbix.conf; then
+#    sed -i "s/${comment}$/php_value date.timezone Asia\/Tokyo/g" /etc/httpd/conf.d/zabbix.conf
+#  fi
+#}
 
 ### keepalived
 function check_keepalivedconf() {
