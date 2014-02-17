@@ -31,16 +31,16 @@ function change_baserepo() {
   if [[ -f "${baserepo}" ]]; then
     mv ${baserepo} ${baserepo}.`date +%Y%m%d`
   fi
-  mv ${vagrant_baserepo} ${baserepo}
+  cp ${vagrant_baserepo} ${baserepo}
 }
 
 function add_valtrepo() {
   local vaultrepo=${repos_dir}/${vault_repofile}
   local vagrant_vaultrepo=${vagrant_repos_dir}/${vault_repofile}
   if [[ -f "${vaultrepo}" ]]; then
-    cp ${vaultrepo} ${vaultrepo}.`date +%Y%m%d`
+    mv ${vaultrepo} ${vaultrepo}.`date +%Y%m%d`
   fi
-  mv ${vagrant_vaultrepo} ${vaultrepo}
+  cp ${vagrant_vaultrepo} ${vaultrepo}
 }
 
 function disabled_ipv6() {
