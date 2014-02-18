@@ -30,6 +30,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     mysql.vm.provision "shell", path: "config.d/mysql56.sh"
   end
 
+  config.vm.define :zabbixagent do |node|
+    node.vm.hostname = "zabbixagent"
+    node.vm.network :private_network, ip: "192.168.50.14"
+    node.vm.provision "shell", path: "config.d/zabbixagent.sh"
+  end
+
   config.vm.provider "virtualbox" do |v|
     v.memory = 2048
   end
