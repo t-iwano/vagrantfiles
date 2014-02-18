@@ -7,27 +7,27 @@ VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "centos-6.4-x86_64"
 
-  config.vm.define :keepalived01 do |keepalived|
-    keepalived.vm.hostname = "keepalived01"
-    keepalived.vm.network :private_network, ip: "192.168.50.10"
-    keepalived.vm.network :private_network, ip: "192.168.51.10"
-    keepalived.vm.network :forwarded_port, guest: 80, host: 8080
-    keepalived.vm.provision "shell", path: "config.d/keepalived01.sh"
+  config.vm.define :keepalived01 do |node|
+    node.vm.hostname = "keepalived01"
+    node.vm.network :private_network, ip: "192.168.50.10"
+    node.vm.network :private_network, ip: "192.168.51.10"
+    node.vm.network :forwarded_port, guest: 80, host: 8080
+    node.vm.provision "shell", path: "config.d/keepalived01.sh"
   end
 
-  config.vm.define :keepalived02 do |keepalived|
-    keepalived.vm.hostname = "keepalived02"
-    keepalived.vm.network :private_network, ip: "192.168.50.11"
-    keepalived.vm.network :private_network, ip: "192.168.51.11"
-    keepalived.vm.network :forwarded_port, guest: 80, host: 8081
-    keepalived.vm.provision "shell", path: "config.d/keepalived02.sh"
+  config.vm.define :keepalived02 do |node|
+    node.vm.hostname = "keepalived02"
+    node.vm.network :private_network, ip: "192.168.50.11"
+    node.vm.network :private_network, ip: "192.168.51.11"
+    node.vm.network :forwarded_port, guest: 80, host: 8081
+    node.vm.provision "shell", path: "config.d/keepalived02.sh"
   end
 
-  config.vm.define :mysql56 do |mysql|
-    mysql.vm.hostname = "mysql56"
-    mysql.vm.network :private_network, ip: "192.168.50.12"
-    mysql.vm.network :private_network, ip: "192.168.51.12"
-    mysql.vm.provision "shell", path: "config.d/mysql56.sh"
+  config.vm.define :mysql56 do |node|
+    node.vm.hostname = "mysql56"
+    node.vm.network :private_network, ip: "192.168.50.12"
+    node.vm.network :private_network, ip: "192.168.51.12"
+    node.vm.provision "shell", path: "config.d/mysql56.sh"
   end
 
   config.vm.define :zabbixagent do |node|
