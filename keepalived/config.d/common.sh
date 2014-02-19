@@ -160,7 +160,7 @@ function check_keepalivedconf() {
 }
 
 function setup_keepalivedconf() {
-  cp /vagrant/files/keepalived.conf /etc/keepalived/keepalived.conf
+  cp /vagrant/files/$(hostname -s).conf /etc/keepalived/keepalived.conf
 }
 
 ### service
