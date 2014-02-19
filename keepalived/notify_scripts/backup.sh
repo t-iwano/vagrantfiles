@@ -40,8 +40,8 @@ keepalived02)
   ;;
 esac
 
-### stop httpd
-stop_service httpd
+### start httpd
+start_service httpd
 
 ### stop zabbix-server
 stop_service zabbix-server
