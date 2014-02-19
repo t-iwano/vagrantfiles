@@ -58,7 +58,7 @@ function disabled_ipv6() {
 change_baserepo
 
 yum clean metadata
-yum -y update
+yum --disablerepo=zabbix,zabbix-non-supported,epel -y update
 
 disabled_ipv6
 
