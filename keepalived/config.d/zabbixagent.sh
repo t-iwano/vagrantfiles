@@ -25,3 +25,5 @@ add_repositories list_zabbix
 ### add rpm packages
 add_packages
 
+### setup zabbix agent conf
+setup_zabbix_agentdconf

@@ -127,6 +127,17 @@ function setup_zabbix_serverconf() {
   fi
 }
 
+function setup_zabbix_agentdconf() {
+  local agentd=/etc/zabbix/zabbix_agentd.conf
+  local vip=192.168.50.13
+  if grep -q "Server=127.0.0.1" ${agentd} >/dev/null; then
+    sed -i "s/Server=127.0.0.1$/Server=${vip}/g" ${agentd}
+  fi
+  if grep -q "Hostname=Zabbix server" ${agentd} >/dev/null; then
+    sed -i "s/Hostname=Zabbix server$/Hostname=$(hostname -s)/g" ${agentd}
+  fi
+}
+
 function setup_timezone() {
   if [[ -f /etc/php.ini ]]; then
     mv /etc/php.ini /etc/php.ini.`date +%Y%m%d`
