@@ -219,6 +219,7 @@ function add_packages() {
     keepalived
     mysql-community-server mysql-community-client
     zabbix-server-mysql-1.8.16 zabbix-web-japanese-1.8.16
+    zabbix-get-1.8.16
 "
   if [[ -n "${addpkg}" ]]; then
     yum install -y ${addpkg}
