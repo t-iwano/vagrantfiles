@@ -129,7 +129,7 @@ function setup_zabbix_serverconf() {
 
 function setup_zabbix_agentdconf() {
   local agentd=/etc/zabbix/zabbix_agentd.conf
-  local vip=192.168.50.13
+  local vip=192.168.50.10,192.168.50.11,192.168.50.13
   if grep -q "Server=127.0.0.1" ${agentd} >/dev/null; then
     sed -i "s/Server=127.0.0.1$/Server=${vip}/g" ${agentd}
   fi
@@ -218,7 +218,7 @@ function add_packages() {
   addpkg="
     keepalived
     mysql-community-server mysql-community-client
-    zabbix-server-mysql-1.8.16 zabbix-web-japanese-1.8.16
+    zabbix-server-mysql-1.8.16 zabbix-web-mysql-1.8.16 zabbix-web-japanese-1.8.16
     zabbix-get-1.8.16
 "
   if [[ -n "${addpkg}" ]]; then
