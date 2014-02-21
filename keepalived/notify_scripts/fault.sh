@@ -11,6 +11,9 @@ set -x
 
 ### operation
 
+### stop mysqld
+stop_service mysqld
+
 ### stop zabbix-server
 stop_service zabbix-server
 
