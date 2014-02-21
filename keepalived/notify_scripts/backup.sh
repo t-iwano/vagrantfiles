@@ -21,6 +21,9 @@ function setup_replication() {
     set_semi_sync_status slave 1
   }
 
+  # sleep
+  sleep 10
+
   # setup slave
   setup_slave ${master_ip} ${slave_ip}
 }
