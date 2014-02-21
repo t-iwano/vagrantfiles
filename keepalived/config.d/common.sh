@@ -55,6 +55,8 @@ master_info_repository=TABLE
 relay_log_info_repository=TABLE
 report_host=${report_host}
 skip-slave-start
+character-set-server=utf8
+skip-character-set-client-handshake
 
 [mysqld_safe]
 log-error=/var/log/mysqld.log
