@@ -124,8 +124,13 @@ function setup_zabbixconf() {
 }
 
 function setup_zabbix_serverconf() {
-  if ! grep -q "DBPassword=zabbix" /etc/zabbix/zabbix_server.conf >/dev/null; then
-    echo "DBPassword=zabbix" >> /etc/zabbix/zabbix_server.conf
+  local server_conf=/etc/zabbix/zabbix_server.conf
+  local src=192.168.50.13
+  if ! grep -q "DBPassword=zabbix" ${server_conf} >/dev/null; then
+    echo "DBPassword=zabbix" >> ${server_conf}
+  fi
+  if ! grep -q "SourceIP=${src}" ${server_conf} >/dev/null; then
+    echo "SourceIP=${src}" >> ${server_conf}
   fi
 }
 
