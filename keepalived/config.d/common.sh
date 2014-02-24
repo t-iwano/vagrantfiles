@@ -136,7 +136,7 @@ function setup_zabbix_serverconf() {
 
 function setup_zabbix_agentdconf() {
   local agentd=/etc/zabbix/zabbix_agentd.conf
-  local vip=192.168.50.10,192.168.50.11,192.168.50.13
+  local vip=192.168.50.13
   if grep -q "Server=127.0.0.1" ${agentd} >/dev/null; then
     sed -i "s/Server=127.0.0.1$/Server=${vip}/g" ${agentd}
   fi
