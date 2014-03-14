@@ -19,6 +19,30 @@ function show_ipaddr() {
   run_in_target ${node} "ip addr show ${ifname} | grep -w inet"
 }
 
+function show_physical_ipaddr() {
+  local node=${1} local ifname=${2}
+  show_ipaddr ${node} ifname=${ifname} | grep -w "${ifname}"
+}
+
+function show_virtual_ipaddr() {
+  local node=${1} local ifname=${2}
+  show_ipaddr ${node} ifname=${ifname} | grep -w "${ifname}:1"
+}
+
+## interface
+
+function down_interface() {
+  local node=${1}
+  shift; eval local "${@}"
+  run_in_target ${node} "sudo ifdown ${ifname}"
+}
+
+function up_interface() {
+  local node=${1}
+  shift; eval local "${@}"
+  run_in_target ${node} "sudo ifup ${ifname}"
+}
+
 ## keepalived
 
 function start_keepalived() {

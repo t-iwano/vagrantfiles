@@ -23,6 +23,8 @@ readonly shunit2_file=${BASH_SOURCE[0]%/*}/shunit2
 function setup_vars() {
   MASTER_HOST=${MASTER_HOST:-keepalived01}
   BACKUP_HOST=${BACKUP_HOST:-keepalived02}
+  PUBLIC_INTERFACE=${PUBLIC_INTERFACE:-eth1}
+  WAKAME_INTERFACE=${WAKAME_INTERFACE:-eth2}
 }
 
 ##
