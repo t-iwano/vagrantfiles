@@ -12,12 +12,16 @@
 ## variables
 master=${MASTER_HOST}
 backup=${BACKUP_HOST}
+pifname=${PUBLIC_INTERFACE}
+wifname=${WAKAME_INTERFACE}
 
 ## function
 
 function test_before_check() {
-  check_master
-  check_backup
+  before_check_master_process
+  before_check_backup_process
+  before_check_master_interface
+  before_check_backup_interface
 }
 
 function test_failover_stop_process() {
@@ -29,8 +33,10 @@ function test_failover_stop_process() {
 }
 
 function test_after_check() {
-  check_new_backup
-  check_new_master
+  after_check_backup_process
+  after_check_master_process
+  after_check_backup_interface
+  after_check_master_interface
 }
 
 ## shunit2
