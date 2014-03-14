@@ -16,51 +16,21 @@ backup=${MASTER_HOST}
 ## function
 
 function test_before_check() {
-  status=$(status_mysqld     ${master})
-  assertEquals "running..." "${status}"
-  status=$(status_zabbix     ${master})
-  assertEquals "running..." "${status}"
-  status=$(status_httpd      ${master})
-  assertEquals "running..." "${status}"
-  status=$(status_keepalived ${master})
-  assertEquals "running..." "${status}"
-
-  status=$(status_mysqld     ${backup})
-  assertEquals "running..." "${status}"
-  status=$(status_zabbix     ${backup})
-  assertEquals "stopped"    "${status}"
-  status=$(status_httpd      ${backup})
-  assertEquals "running..." "${status}"
-  status=$(status_keepalived ${backup})
-  assertEquals "running..." "${status}"
+  check_master
+  check_backup
 }
 
 function test_failover_stop_process() {
   stop_keepalived ${master}
   assertEquals 0 $?
 
-  echo "wait failover finished 60sec..."
-  sleep 60
+  wait_sec 60
+  echo "failback finished"
 }
 
 function test_after_check() {
-  status=$(status_mysqld     ${master})
-  assertEquals "stopped"    "${status}"
-  status=$(status_zabbix     ${master})
-  assertEquals "stopped"    "${status}"
-  status=$(status_httpd      ${master})
-  assertEquals "stopped"    "${status}"
-  status=$(status_keepalived ${master})
-  assertEquals "stopped"    "${status}"
-
-  status=$(status_mysqld     ${backup})
-  assertEquals "running..." "${status}"
-  status=$(status_zabbix     ${backup})
-  assertEquals "running..." "${status}"
-  status=$(status_httpd      ${backup})
-  assertEquals "running..." "${status}"
-  status=$(status_keepalived ${backup})
-  assertEquals "running..." "${status}"
+  check_new_backup
+  check_new_master
 }
 
 ## shunit2
