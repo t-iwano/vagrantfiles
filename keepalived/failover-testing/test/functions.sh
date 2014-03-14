@@ -31,9 +31,19 @@ function stop_keepalived() {
   run_in_target ${node} "sudo service keepalived stop"
 }
 
+function restart_keepalived() {
+  local node=${1}
+  run_in_target ${node} "sudo service keepalived restart"
+}
+
 function status_keepalived() {
   local node=${1}
   run_in_target ${node} "sudo service keepalived status" | awk '{print $NF}'
+}
+
+function kill_keepalived() {
+  local node=${1}
+  run_in_target ${node} "sudo pkill -f keepalived"
 }
 
 ## httpd
