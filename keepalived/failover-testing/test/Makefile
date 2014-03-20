@@ -1,8 +1,10 @@
 all: test
 
-test: process
+test: process network
 
 process:
 	(cd $@ && make)
+network:
+	(cd $@ && make)
 
-.PHONY: process
+.PHONY: process network

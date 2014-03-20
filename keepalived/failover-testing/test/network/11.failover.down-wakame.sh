@@ -31,11 +31,11 @@ function test_before_check() {
   before_check_backup_interface
 }
 
-function test_failover_stop_process() {
+function test_failover_stop_interface() {
   down_interface ${master} ifname=${wifname}
   assertEquals 0 $?
 
-  wait_sec 60
+  wait_sec 180
   echo "failover finished"
 }
 

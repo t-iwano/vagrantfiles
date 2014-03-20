@@ -10,13 +10,13 @@
 
 function run_in_target() {
   local node=${1}; shift
-  vagrant ssh ${node} -c "${@}"
+  ssh ${node} "${@}"
 }
 
 function show_ipaddr() {
   local node=${1}
   shift; eval local "${@}"
-  run_in_target ${node} "ip addr show ${ifname} | grep -w inet"
+  run_in_target ${node} "/sbin/ip addr show ${ifname} | grep -w inet"
 }
 
 function show_physical_ipaddr() {
@@ -90,5 +90,4 @@ function status_mysqld() {
   local node=${1}
   run_in_target ${node} "sudo service mysqld status"  | awk '{print $NF}'
 }
-
 

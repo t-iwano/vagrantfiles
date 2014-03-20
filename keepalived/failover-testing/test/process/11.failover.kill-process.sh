@@ -36,11 +36,11 @@ function test_before_check() {
   before_check_backup_interface
 }
 
-function test_failover_stop_process() {
+function test_failover_kill_process() {
   kill_keepalived ${master}
   assertEquals 0 $?
 
-  wait_sec 60
+  wait_sec 120
   echo "failover finished"
 }
 

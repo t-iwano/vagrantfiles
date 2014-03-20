@@ -15,19 +15,19 @@
 function oneTimeSetUp() {
   status_keepalived ${master} | grep -w running || {
     start_keepalived ${master} 
-    wait_sec 30
+    wait_sec 60
   }
 
   status_keepalived ${backup} | grep -w running || {
     start_keepalived ${backup} 
-    wait_sec 30
+    wait_sec 60
   }
 }
 
 function oneTimeTearDown() {
   status_keepalived ${master} | grep -w "stopped\|locked" && {
     start_keepalived ${master}
-    wait_sec 60
+    wait_sec 120
   }
 }
 
@@ -101,6 +101,39 @@ function after_check_backup_interface() {
   assertEquals 1 $?
   show_virtual_ipaddr ${master} ${wifname}
   assertEquals 1 $?
+}
+
+function before_check_master_repl() {
+  enabled=$(check_rpl_variables ${master} name="master" value="enabled")
+  assertEquals "ON"  "${enabled}"
+  enabled=$(check_rpl_variables ${master} name="slave"  value="enabled")
+  assertEquals "OFF" "${enabled}"
+  status=$(check_rpl_status ${master} name="master")
+  assertEquals "ON" "${status}"
+  status=$(check_rpl_status ${master} name="slave" )
+  assertEquals "OFF" "${status}"
+}
+
+function before_check_backup_repl() {
+  enabled=$(check_rpl_variables ${backup} name="master" value="enabled")
+  assertEquals "OFF" "${enabled}"
+  enabled=$(check_rpl_variables ${backup} name="slave"  value="enabled")
+  assertEquals "ON"  "${enabled}"
+  status=$(check_rpl_status ${backup} name="master")
+  assertEquals "OFF" "${status}"
+  status=$(check_rpl_status ${backup} name="slave" )
+  assertEquals "ON"  "${status}"
+}
+
+function after_check_master_repl() {
+  enabled=$(check_rpl_variables ${backup} name="master" variable="enabled")
+  assertEquals "ON"  "${enabled}"
+  enabled=$(check_rpl_variables ${backup} name="slave"  variable="enabled")
+  assertEquals "OFF" "${enabled}"
+  status=$(check_rpl_status ${backup} name="master")
+  assertEquals "ON"  "${status}"
+  status=$(check_rpl_status ${backup} name="slave" )
+  assertEquals "OFF" "${status}"
 }
 
 function wait_sec() {
