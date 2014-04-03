@@ -20,6 +20,9 @@ function setup_replication() {
   # set semi sync master timeout
   set_semi_sync_master_timeout
 
+  # set semi sync master trace level
+  set_semi_sync_trace_level master
+
   # check semi sync master status
   check_semi_repl_status master ON || {
     set_semi_sync_status master 1

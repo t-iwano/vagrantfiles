@@ -59,6 +59,12 @@ function set_semi_sync_status() {
   echo "set global rpl_semi_sync_${name}_enabled=${value}" | query_mysql
 }
 
+function set_semi_sync_trace_level() {
+  local name=$1
+  [[ -n ${name} ]] || return 1
+  echo "set global rpl_semi_sync_${name}_trace_level=1" | query_mysql
+}
+
 function set_semi_sync_master_timeout() {
   echo "set global rpl_semi_sync_master_timeout=5000" | query_mysql
 }

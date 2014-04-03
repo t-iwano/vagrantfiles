@@ -18,6 +18,9 @@ function setup_replication() {
     set_semi_sync_status master 0
   }
 
+  # set semi sync slave trace level
+  set_semi_sync_trace_level slave
+
   # check semi sync slave status
   check_semi_repl_status slave ON || {
     set_semi_sync_status slave 1
