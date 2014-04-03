@@ -31,6 +31,9 @@ function setup_replication() {
 
   # setup slave
   setup_slave ${master_ip} ${slave_ip}
+
+  # start slave
+  start_slave
 }
 
 ### operation

@@ -69,6 +69,10 @@ function set_semi_sync_master_timeout() {
   echo "set global rpl_semi_sync_master_timeout=5000" | query_mysql
 }
 
+function start_slave() {
+  echo "start slave" | query_mysql
+}
+
 function stop_slave() {
   echo "stop slave" | query_mysql
 }
@@ -83,5 +87,12 @@ function setup_slave() {
   local slave_ip=$2
   [[ -n ${master_ip}  ]] || return 1
   [[ -n ${slave_ip} ]] || return 1
-  /usr/bin/mysqlreplicate --master=${MYSQL_USER}@${master_ip} --slave=${MYSQL_USER}@${slave_ip} --rpl-user=${REPL_USER}:${REPL_PASSWORD} --start-from-beginning
+#  /usr/bin/mysqlreplicate --master=${REPL_USER}:${REPL_PASSWORD}@${master_ip} --slave=${MYSQL_USER}@${slave_ip} --rpl-user=${REPL_USER}:${REPL_PASSWORD} --start-from-beginning
+cat <<EOS | query_mysql
+change master to \
+master_host='${master_ip}', \
+master_user='${REPL_USER}', \
+master_password='${REPL_PASSWORD}', \
+master_auto_position=1;
+EOS
 }
