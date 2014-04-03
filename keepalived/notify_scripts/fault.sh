@@ -11,12 +11,12 @@ set -x
 
 ### operation
 
-### stop mysqld
-stop_service mysqld
+### stop httpd
+stop_service httpd
 
 ### stop zabbix-server
 stop_service zabbix-server
 
-### stop httpd
-stop_service httpd
+### stop mysqld
+stop_service mysqld
 
