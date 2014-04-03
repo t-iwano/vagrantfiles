@@ -60,7 +60,7 @@ function set_semi_sync_status() {
 }
 
 function set_semi_sync_master_timeout() {
-  echo "set global rpl_semi_sync_master_timeout=30" | query_mysql
+  echo "set global rpl_semi_sync_master_timeout=5000" | query_mysql
 }
 
 function stop_slave() {
