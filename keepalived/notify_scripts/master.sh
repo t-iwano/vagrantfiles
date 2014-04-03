@@ -6,6 +6,7 @@ set -x
 
 ### require
 . /vagrant/notify_scripts/common.sh
+. /root/secure/root
 
 ### function
 function setup_replication() {
@@ -26,6 +27,7 @@ function setup_replication() {
 }
 
 ### operation
+setup_vars
 
 ### start mysqld
 start_service mysqld

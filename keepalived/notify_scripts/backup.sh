@@ -6,6 +6,8 @@ set -x
 
 ### require
 . /vagrant/notify_scripts/common.sh
+. /root/secure/root
+. /root/secure/repl
 
 ### function
 function setup_replication() {
@@ -29,6 +31,7 @@ function setup_replication() {
 }
 
 ### operation
+setup_vars
 
 ### setup params
 hostname=`hostname -s`

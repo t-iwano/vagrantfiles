@@ -3,6 +3,14 @@
 #
 set -e
 
+### setup
+function setup_vars() {
+  MYSQL_USER=${MYSQL_USER:-root}
+  MYSQL_PASSWORD=${MYSQL_PASSWORD:-}
+  REPL_USER=${REPL_USER:-repl}
+  REPL_PASSWORD=${REPL_PASSWORD:-repl}
+}
+
 ### service
 function start_service() {
   local name=$1
@@ -28,7 +36,11 @@ function restart_service() {
 
 ### mysqld
 function query_mysql() {
-  /usr/bin/mysql -uroot
+  declare mysql_opts=""
+  [[ -n "${MYSQL_PASSWORD}" ]] && {
+    mysql_opts="${mysql_opts} --password=${MYSQL_PASSWORD}"
+  }
+  /usr/bin/mysql -s ${mysql_opts} -u${MYSQL_USER}
 }
 
 function check_semi_repl_status() {
@@ -65,5 +77,5 @@ function setup_slave() {
   local slave_ip=$2
   [[ -n ${master_ip}  ]] || return 1
   [[ -n ${slave_ip} ]] || return 1
-  /usr/bin/mysqlreplicate --master=root@${master_ip} --slave=root@${slave_ip} --rpl-user=repl:repl --start-from-beginning
+  /usr/bin/mysqlreplicate --master=${MYSQL_USER}@${master_ip} --slave=${MYSQL_USER}@${slave_ip} --rpl-user=${REPL_USER}:${REPL_PASSWORD} --start-from-beginning
 }
